@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://MoonoProtocol.github.io/moono-docs/sitemap-index.xml
