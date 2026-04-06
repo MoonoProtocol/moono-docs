@@ -64,6 +64,10 @@ Before confirming, review the total cost breakdown:
 
 You pay the interest + fees upfront from your wallet. The borrowed SOL goes entirely into the pump.fun token purchase.
 
+:::note
+Launch configurations that use WSOL as the quote currency (such as pump.fun) require WSOL for fees and interest. If you don't have enough WSOL, the app will automatically convert the required amount from your native SOL balance. For frequent launches, consider pre-wrapping SOL to save on overhead — see [Working with WSOL](/guides/wsol/) for details.
+:::
+
 :::tip
 Check the [Economics](/getting-started/economics/#complete-cost-examples) page for detailed cost examples at different loan sizes and durations.
 :::
