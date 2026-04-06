@@ -234,7 +234,7 @@ The actual LP interest depends on which ticks have available liquidity at the ti
 
 ## Liquidation Economics
 
-When a loan expires without being repaid, anyone can liquidate it:
+When a loan expires without being repaid, the borrower or protocol admin can liquidate it:
 
 1. All collateral tokens (the tokens purchased on pump.fun) are sold on the bonding curve
 2. The SOL proceeds are used to repay the borrowed amount to the liquidity pool
@@ -246,18 +246,18 @@ When a loan expires without being repaid, anyone can liquidate it:
 **Scenario A: Token price increased**
 - Collateral is worth more than the borrowed amount
 - LP is fully repaid
-- Liquidator earns the excess as profit
+- Excess SOL is refunded to the borrower
 
 **Scenario B: Token price decreased, but within reserve**
 - Collateral sale doesn't fully cover the loan
 - Migration reserve covers the shortfall
 - LP is fully repaid
-- Liquidator may earn a small reward or break even
+- Borrower may receive a small refund or nothing
 
 **Scenario C: Token price crashed below reserve coverage**
 - Collateral + migration reserve don't cover the full loan
 - LP receives a partial repayment (loss)
-- Liquidator earns nothing
+- Borrower receives nothing back
 
 :::note
 The migration reserve acts as a buffer to protect LPs from moderate price declines in the launched token.

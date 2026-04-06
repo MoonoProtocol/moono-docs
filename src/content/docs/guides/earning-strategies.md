@@ -1,0 +1,98 @@
+---
+title: Earning Strategies
+description: Possible scenarios for borrowers to earn from token launches through Moono Protocol.
+---
+
+:::caution[Disclaimer]
+This page describes **hypothetical scenarios** of how the protocol mechanics work. It is **not financial advice** and **not a call to action**. Token markets are highly volatile — any participant can incur financial losses. You are solely responsible for your decisions. Always do your own research and understand the risks before interacting with any DeFi protocol.
+:::
+
+This page explains possible economic scenarios where a borrower may earn from launching a token through Moono Protocol.
+
+## How It Works
+
+When you take a loan and launch a token, Moono Protocol creates the token on pump.fun and makes the initial buy from the bonding curve. The purchased tokens are held as collateral. You have two ways to close the loan, and both can potentially result in profit.
+
+## Scenario 1: Repay and Sell
+
+1. **Launch** — borrow SOL and launch your token
+2. **Build** — grow the token community, attract holders, create engagement
+3. **Repay** — repay the loan before it expires; the collateral tokens are returned to your wallet
+4. **Sell** — sell the tokens on the open market at the current price
+
+**When it's profitable:** if the token price has risen since launch, the tokens you receive back are worth more than the total loan cost (borrowed amount + fees + interest).
+
+### Example
+
+- You borrow 1 SOL to launch a token, total cost ~0.11 SOL in fees and interest
+- The protocol buys tokens on the bonding curve with your 1 SOL
+- The token gains traction, the price rises significantly
+- You repay the loan (~1 SOL goes back to the liquidity pool)
+- You receive the collateral tokens, now worth 3 SOL on the market
+- You sell for 3 SOL — your profit is 3 - 0.11 = **~2.89 SOL**
+
+## Scenario 2: Self-Liquidation
+
+As a borrower, you can call **liquidate** on your own loan. The protocol will sell the collateral tokens on the bonding curve, repay the liquidity pool, and **return any excess SOL to you**.
+
+1. **Launch** — borrow SOL and launch your token
+2. **Build** — grow the token community, attract holders
+3. **Liquidate** — call liquidate on your own loan; the protocol sells the collateral and settles
+
+**When it's profitable:** if the SOL proceeds from selling the collateral exceed the borrowed amount, the difference is refunded to you.
+
+### Example
+
+- You borrow 1 SOL, total cost ~0.11 SOL
+- The token price rises, the collateral is now worth 2.5 SOL on the bonding curve
+- You call liquidate — the protocol sells the tokens for 2.5 SOL
+- 1 SOL goes back to the liquidity pool (repaying the loan)
+- The remaining ~1.5 SOL is refunded to your wallet
+- Net result: you spent 0.11 SOL in fees and received ~1.5 SOL back — profit of **~1.39 SOL**
+
+### Repay vs Self-Liquidation
+
+| | Repay | Self-Liquidation |
+|---|---|---|
+| You receive | Collateral tokens (to sell yourself) | Excess SOL directly |
+| Requires | SOL to repay the loan | Nothing extra — the collateral covers it |
+| Best when | You want to keep some tokens or sell on a specific DEX | You want a simple exit in SOL |
+
+## What Drives Profitability
+
+The key to any earning scenario is **token demand**. The protocol handles the mechanics — the loan, the launch, the settlement. But the token's market value depends on:
+
+- **Community** — building genuine interest and engagement around the token
+- **Visibility** — getting attention through social media, communities, and other channels
+- **Utility or narrative** — giving people a reason to hold the token
+
+The protocol enables a low-cost launch. What happens after launch depends on the effort put into the project.
+
+## Earning as a Liquidity Provider
+
+You don't have to be a borrower to earn on Moono Protocol. Liquidity providers earn interest from every loan taken:
+
+- **Deposit SOL** into the liquidity pool and choose your risk tier (tick)
+- **Earn interest** every time a borrower takes a loan funded by your tick
+- **Interest accrues automatically** — the value of your LP shares grows as loans are repaid with interest
+
+Your effective yield depends on two factors: the interest rate of your tick and how often your liquidity is utilized. Lower ticks earn less per loan but are borrowed more frequently; higher ticks earn more per loan but may sit idle. See the [Liquidity Provider Guide](/guides/liquidity-provider/) for details.
+
+## Earning from Token Price Growth
+
+Beyond lending mechanics, you can also earn simply by holding tokens launched through Moono Protocol. If you believe in a project launched on the platform, you can buy its tokens on pump.fun like any other market participant. If the token grows in value, you profit from the price appreciation.
+
+This is standard token trading and is not specific to Moono Protocol — the same risks and opportunities apply as with any token purchase.
+
+## Risks
+
+:::danger[Important]
+These scenarios describe potential outcomes, not guaranteed results. The majority of token launches may not result in profit. Possible losses include:
+
+- **Full loss of fees and interest** — if the token price drops, you lose the upfront costs paid for the loan
+- **Collateral devaluation** — if the token price falls below the loan amount, self-liquidation returns less than what was borrowed; fees are still lost
+- **Market impact** — selling large amounts of tokens can significantly move the price down, especially on bonding curves with low liquidity
+- **Time pressure** — loans have a fixed duration (1–24 hours); if you don't act before expiration, the protocol admin may liquidate your loan
+
+Any activity involving token launches and trading carries significant financial risk. Other market participants may incur losses as a result of token price movements. This documentation describes protocol mechanics only and does not constitute an endorsement or recommendation of any particular strategy.
+:::

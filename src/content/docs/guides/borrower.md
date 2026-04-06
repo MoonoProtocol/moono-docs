@@ -102,7 +102,7 @@ On repayment:
 
 If you don't repay before the deadline, the loan becomes eligible for liquidation:
 
-- Anyone can trigger the liquidation (it's permissionless)
+- You can trigger the liquidation yourself, or the protocol admin will do it
 - The collateral tokens are sold on the pump.fun bonding curve
 - Proceeds go to repay the liquidity pool
 - You lose the collateral tokens, but you don't owe anything extra

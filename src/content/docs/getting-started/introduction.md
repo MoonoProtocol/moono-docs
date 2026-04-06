@@ -42,7 +42,7 @@ Moono Protocol lets you **borrow SOL** to launch and seed your token on pump.fun
 - **Single-transaction launches** — borrowing, token creation, and initial buy happen atomically
 - **Tiered liquidity** — 1,024 risk tiers allow LPs to choose their risk/reward profile
 - **On-chain economics** — all fees, interest, and liquidation logic are computed transparently on-chain
-- **Permissionless liquidation** — anyone can liquidate expired loans and earn a reward
+- **Self-liquidation** — borrowers can liquidate their own loans and receive any excess proceeds
 - **Non-custodial** — the protocol is a Solana program; no one can access your funds except through the program logic
 
 ## Supported Platforms

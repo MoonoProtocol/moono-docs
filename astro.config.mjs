@@ -45,6 +45,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Liquidity Provider', slug: 'guides/liquidity-provider', translations: { ru: 'Поставщик ликвидности' } },
 						{ label: 'Borrower', slug: 'guides/borrower', translations: { ru: 'Заёмщик' } },
+						{ label: 'Earning Strategies', slug: 'guides/earning-strategies', translations: { ru: 'Стратегии заработка' } },
 					],
 				},
 				{

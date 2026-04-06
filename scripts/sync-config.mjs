@@ -465,7 +465,7 @@ The actual LP interest depends on which ticks have available liquidity at the ti
 
 ## Liquidation Economics
 
-When a loan expires without being repaid, anyone can liquidate it:
+When a loan expires without being repaid, the borrower or protocol admin can liquidate it:
 
 1. All collateral tokens (the tokens purchased on pump.fun) are sold on the bonding curve
 2. The SOL proceeds are used to repay the borrowed amount to the liquidity pool
@@ -477,18 +477,18 @@ When a loan expires without being repaid, anyone can liquidate it:
 **Scenario A: Token price increased**
 - Collateral is worth more than the borrowed amount
 - LP is fully repaid
-- Liquidator earns the excess as profit
+- Excess SOL is refunded to the borrower
 
 **Scenario B: Token price decreased, but within reserve**
 - Collateral sale doesn't fully cover the loan
 - Migration reserve covers the shortfall
 - LP is fully repaid
-- Liquidator may earn a small reward or break even
+- Borrower may receive a small refund or nothing
 
 **Scenario C: Token price crashed below reserve coverage**
 - Collateral + migration reserve don't cover the full loan
 - LP receives a partial repayment (loss)
-- Liquidator earns nothing
+- Borrower receives nothing back
 
 :::note
 The migration reserve acts as a buffer to protect LPs from moderate price declines in the launched token.
@@ -830,7 +830,7 @@ ${sharedTable}
 
 ## Экономика ликвидации
 
-Когда срок займа истекает без погашения, любой может его ликвидировать:
+Когда срок займа истекает без погашения, заёмщик или администратор протокола могут его ликвидировать:
 
 1. Все залоговые токены (токены, купленные на pump.fun) продаются на кривой связывания
 2. Полученные SOL направляются на погашение заёмной суммы в пул ликвидности
@@ -842,18 +842,18 @@ ${sharedTable}
 **Сценарий А: Цена токена выросла**
 - Залог стоит больше заёмной суммы
 - LP получает полное погашение
-- Ликвидатор зарабатывает излишек как прибыль
+- Излишек SOL возвращается заёмщику
 
 **Сценарий Б: Цена токена снизилась, но в пределах резерва**
 - Продажа залога не покрывает полностью займ
 - Резерв на миграцию покрывает недостачу
 - LP получает полное погашение
-- Ликвидатор может получить небольшое вознаграждение или выйти в ноль
+- Заёмщик может получить небольшой возврат или ничего
 
 **Сценарий В: Цена токена обвалилась ниже покрытия резервом**
 - Залог + резерв на миграцию не покрывают полный займ
 - LP получает частичное погашение (убыток)
-- Ликвидатор ничего не зарабатывает
+- Заёмщик ничего не получает обратно
 
 :::note
 Резерв на миграцию выступает буфером для защиты LP от умеренного снижения цены запущенного токена.
