@@ -1,34 +1,37 @@
 ---
 title: Moono Protocol
-description: Official documentation for Moono Protocol — Solana-based DeFi protocol.
+description: SOL lending protocol for token launches on pump.fun. Borrow SOL, launch tokens, provide liquidity.
 template: splash
 hero:
-  tagline: Solana-based DeFi protocol. Build, trade, and manage digital assets with ease.
+  tagline: Borrow SOL to launch tokens on pump.fun. Provide liquidity and earn interest.
   actions:
     - text: Get Started
       link: /getting-started/introduction/
       icon: right-arrow
     - text: View on GitHub
-      link: https://github.com/moono-protocol
+      link: https://github.com/MoonoProtocol
       icon: external
       variant: minimal
+      attrs:
+        target: _blank
+        rel: noopener noreferrer
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Why Moono Protocol?
+## How it works
 
 <CardGrid stagger>
-  <Card title="Solana-Powered" icon="rocket">
-    Built on Solana for fast, low-cost transactions with high throughput.
+  <Card title="Borrow SOL" icon="rocket">
+    Get a SOL loan to launch your token on pump.fun. Choose your loan amount (0.1–10 SOL) and duration (1–24 hours).
   </Card>
-  <Card title="Open Source" icon="open-book">
-    Fully open-source codebase. Contribute, audit, and build with confidence.
+  <Card title="Launch Tokens" icon="star">
+    Moono automatically creates your token on pump.fun and makes the initial buy — all in a single transaction.
   </Card>
-  <Card title="Developer Friendly" icon="laptop">
-    Comprehensive SDK and API references to integrate Moono into your applications.
+  <Card title="Provide Liquidity" icon="seti:liquid">
+    Supply SOL to the liquidity pool, choose your risk tier, and earn interest from borrowers.
   </Card>
-  <Card title="Secure by Design" icon="approve-check">
-    Audited smart contracts with battle-tested security patterns.
+  <Card title="Transparent Economics" icon="open-book">
+    All fees and interest rates are computed on-chain. No hidden costs — everything is verifiable in the smart contract.
   </Card>
 </CardGrid>

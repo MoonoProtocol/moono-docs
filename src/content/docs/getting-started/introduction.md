@@ -1,29 +1,45 @@
 ---
 title: Introduction
-description: Learn what Moono Protocol is and how it works.
+description: What is Moono Protocol and how does it work.
 ---
 
-Moono Protocol is a Solana-based DeFi protocol designed for building, trading, and managing digital assets.
+Moono Protocol is a decentralized lending protocol on Solana designed specifically for token launches on pump.fun.
 
-## Overview
+## The Problem
 
-Moono Protocol provides a set of on-chain programs (smart contracts) and tools that enable:
+Launching a token on pump.fun requires SOL for the initial liquidity — you need to fund the bonding curve with a buy. If you don't have enough SOL on hand, you can't launch. There's also the risk of locking up your own capital in a volatile new token.
 
-- **Token management** — create and manage SPL tokens
-- **Trading** — decentralized exchange functionality
-- **Governance** — on-chain voting and protocol management
-- **SDK & APIs** — developer tools for seamless integration
+## The Solution
 
-## Architecture
+Moono Protocol lets you **borrow SOL** to launch and seed your token on pump.fun, while **liquidity providers earn interest** by supplying the SOL that borrowers use.
 
-The protocol consists of several key components:
+### For Borrowers
 
-- **moono-solana2** — core Solana programs (smart contracts)
-- **moono-app-web2** — web application frontend
-- **moono-solana-admin-web2** — admin panel for protocol management
+1. Choose how much SOL to borrow (0.1–10 SOL) and for how long (1–24 hours)
+2. Moono creates your token on pump.fun and makes the initial buy — all in one transaction
+3. The purchased tokens serve as collateral for your loan
+4. Repay the loan before expiration to get your tokens back, or let it be liquidated
 
-## Next Steps
+### For Liquidity Providers
 
-- Follow the [Quick Start](/getting-started/quick-start/) guide to set up your environment
-- Explore the [Guides](/guides/example/) for detailed walkthroughs
-- Check the [API Reference](/reference/example/) for technical details
+1. Deposit SOL into the protocol's liquidity pool
+2. Choose a **tick** (risk tier) that determines the interest rate you earn
+3. Lower ticks = lower interest rate, but your liquidity is used first (more utilization)
+4. Higher ticks = higher interest rate, used only when lower ticks are depleted
+5. Withdraw your SOL plus earned interest at any time (subject to liquidity availability)
+
+## Key Features
+
+- **Single-transaction launches** — borrowing, token creation, and initial buy happen atomically
+- **Tiered liquidity** — 1,024 risk tiers allow LPs to choose their risk/reward profile
+- **On-chain economics** — all fees, interest, and liquidation logic are computed transparently on-chain
+- **Permissionless liquidation** — anyone can liquidate expired loans and earn a reward
+- **Non-custodial** — the protocol is a Solana program; no one can access your funds except through the program logic
+
+## Supported Platforms
+
+Currently, Moono Protocol supports token launches on:
+
+- **pump.fun** — the leading memecoin launchpad on Solana
+
+The protocol architecture supports multiple launch platforms and quote assets, but the current mainnet deployment is configured for pump.fun with WSOL (wrapped SOL) as the quote asset.
