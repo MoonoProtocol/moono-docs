@@ -57,9 +57,9 @@ Provide the metadata for your new token:
 
 Before confirming, review the total cost breakdown:
 
-1. **Protocol Fee** — 0.05 SOL (fixed)
+1. **Protocol Fee** — 0.01 SOL (fixed)
 2. **Migration Reserve** — proportional to loan size (see [Economics](/getting-started/economics/#migration-reserve))
-3. **Launch Overhead** — 0.01 SOL (refundable)
+3. **Launch Overhead** — 0.05 SOL (refundable)
 4. **Interest** — depends on loan amount, duration, and current liquidity utilization
 
 You pay the interest + fees upfront from your wallet. The borrowed SOL goes entirely into the pump.fun token purchase.
@@ -95,7 +95,7 @@ Before the loan expires, you can repay to recover your collateral tokens:
 On repayment:
 - The borrowed SOL is returned to the liquidity pool
 - Your collateral tokens (the tokens bought on pump.fun) are transferred to your wallet
-- The refundable launch overhead (0.01 SOL) is returned to you
+- The refundable launch overhead (0.05 SOL) is returned to you
 - The loan is marked as **Repaid**
 
 ### Option B: Let It Be Liquidated

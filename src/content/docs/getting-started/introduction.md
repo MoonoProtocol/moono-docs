@@ -38,8 +38,8 @@ Moono Protocol lets you **borrow SOL** to launch and seed your token on pump.fun
 
 ## Supported Platforms
 
-Currently, Moono Protocol supports token launches on:
+Moono Protocol is designed to support **multiple launch platforms**. The first integrated platform is:
 
 - **pump.fun** — the leading memecoin launchpad on Solana
 
-The protocol architecture supports multiple launch platforms and quote assets, but the current mainnet deployment is configured for pump.fun with WSOL (wrapped SOL) as the quote asset.
+More platforms will be added in the future. The protocol architecture natively supports multiple launch platforms and quote assets — each platform gets its own launch configuration with independent parameters. The current mainnet deployment is configured for pump.fun with WSOL (wrapped SOL) as the quote asset.

@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "sync-config": "node scripts/sync-config.mjs",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "npm run sync-config && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -14,5 +15,8 @@
     "@astrojs/starlight": "^0.38.2",
     "astro": "^6.0.1",
     "sharp": "^0.34.2"
+  },
+  "devDependencies": {
+    "@solana/web3.js": "^1.98.4"
   }
 }

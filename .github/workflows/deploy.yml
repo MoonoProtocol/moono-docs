@@ -32,6 +32,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
