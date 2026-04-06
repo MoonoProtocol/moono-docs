@@ -22,7 +22,7 @@ When a borrower takes a loan, the total cost consists of several components:
 | **LP Interest** | Interest paid to liquidity providers, determined by tick rates and loan duration |
 | **Shared Interest** | Additional protocol-wide interest surcharge distributed to all participating ticks |
 | **Protocol Fee** | Fee charged by the protocol for each launch |
-| **Migration Reserve** | SOL reserved for potential Raydium migration |
+| **Migration Reserve** | SOL reserved for potential DEX migration |
 | **Launch Overhead** | Refundable overhead to cover transaction costs |
 
 ## Loan Parameters
@@ -46,7 +46,7 @@ This fee goes to the protocol treasury.
 
 ## Migration Reserve
 
-A portion of the loan is reserved to cover the cost of potential token migration to Raydium (when the bonding curve completes on pump.fun):
+A portion of the loan is reserved to cover the cost of potential token migration to a DEX (when the bonding curve completes on pump.fun):
 
 ```
 Migration Reserve = (min(loan_amount, 85 SOL) × 1 SOL) / 85 SOL
@@ -62,7 +62,7 @@ Migration Reserve = (min(loan_amount, 85 SOL) × 1 SOL) / 85 SOL
 | 5 SOL | 0.0588 SOL |
 | 10 SOL | 0.1176 SOL |
 
-The migration reserve is used to provide liquidity on Raydium if the token's bonding curve completes. If the loan is repaid before migration happens, the reserve is returned as part of the settlement.
+The migration reserve is used to provide liquidity on a DEX if the token's bonding curve completes. If the loan is repaid before migration happens, the reserve is returned as part of the settlement.
 
 ## Launch Overhead (Refundable)
 
@@ -229,7 +229,7 @@ The actual LP interest depends on which ticks have available liquidity at the ti
 | LP Interest | Distributed to the specific LPs whose ticks funded the loan |
 | Shared Interest | Distributed proportionally across all participating ticks |
 | Protocol Fee | Protocol treasury |
-| Migration Reserve | Held in escrow; used for Raydium migration or returned on repayment |
+| Migration Reserve | Held in escrow; used for DEX migration or returned on repayment |
 | Launch Overhead | Returned to borrower on loan closure |
 
 ## Liquidation Economics

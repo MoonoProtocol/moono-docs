@@ -5,6 +5,15 @@ description: What is Moono Protocol and how does it work.
 
 Moono Protocol is a decentralized lending protocol on Solana designed specifically for token launches on pump.fun.
 
+## Application
+
+The protocol is deployed and available at:
+
+- **Main app** — [app.moono.me](https://app.moono.me)
+- **IPFS mirror** — [IPNS link](https://k51qzi5uqu5dlztn13eice0fixpjzzq3t7qkdz3wr0ve7zxwml3v52uj1orgl1.ipns.dweb.link)
+
+All releases are published to IPFS. If the main app is unavailable for any reason, you can always access the protocol through the IPFS mirror.
+
 ## The Problem
 
 Launching a token on pump.fun requires SOL for the initial liquidity — you need to fund the bonding curve with a buy. If you don't have enough SOL on hand, you can't launch. There's also the risk of locking up your own capital in a volatile new token.
