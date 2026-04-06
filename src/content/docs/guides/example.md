@@ -33,5 +33,5 @@ const connection = new Connection('https://api.mainnet-beta.solana.com');
 
 ## Next Steps
 
-- Check the [API Reference](/moono-docs/reference/example/) for detailed method signatures
+- Check the [API Reference](/reference/example/) for detailed method signatures
 - Join the community on GitHub for support and discussions

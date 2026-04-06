@@ -24,6 +24,6 @@ The protocol consists of several key components:
 
 ## Next Steps
 
-- Follow the [Quick Start](/moono-docs/getting-started/quick-start/) guide to set up your environment
-- Explore the [Guides](/moono-docs/guides/example/) for detailed walkthroughs
-- Check the [API Reference](/moono-docs/reference/example/) for technical details
+- Follow the [Quick Start](/getting-started/quick-start/) guide to set up your environment
+- Explore the [Guides](/guides/example/) for detailed walkthroughs
+- Check the [API Reference](/reference/example/) for technical details

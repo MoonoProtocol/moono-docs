@@ -5,8 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://MoonoProtocol.github.io',
-	base: '/moono-docs',
+	site: 'https://docs.moono.me',
 	integrations: [
 		starlight({
 			title: 'Moono Protocol',

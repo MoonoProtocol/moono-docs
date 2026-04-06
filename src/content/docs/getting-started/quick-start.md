@@ -55,5 +55,5 @@ anchor deploy
 
 ## What's Next?
 
-- Read the [Guides](/moono-docs/guides/example/) for in-depth tutorials
-- Explore the [API Reference](/moono-docs/reference/example/) for detailed specifications
+- Read the [Guides](/guides/example/) for in-depth tutorials
+- Explore the [API Reference](/reference/example/) for detailed specifications
