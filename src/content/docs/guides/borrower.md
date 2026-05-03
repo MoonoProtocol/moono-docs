@@ -3,13 +3,14 @@ title: Borrower Guide
 description: Step-by-step guide for borrowing SOL and launching tokens on pump.fun through Moono Protocol.
 ---
 
-This guide walks you through the process of borrowing SOL from Moono Protocol to launch a token on pump.fun.
+This guide walks you through the full process of borrowing SOL from Moono Protocol to launch a token on pump.fun.
 
 ## Prerequisites
 
 - A Solana wallet (Phantom, Solflare, or any compatible wallet)
 - SOL in your wallet to cover fees and interest (see [Economics](/getting-started/economics/) for exact costs)
-- Token metadata ready: name, symbol, and image URI
+
+You can prepare token metadata in advance, but the app can also generate everything for you in-flow.
 
 ## Step 1: Register Your Profile
 
@@ -19,114 +20,159 @@ Before your first loan, you need to create a **User Profile** on the protocol. T
 - Click **Register** (or the profile creation action)
 - Approve the transaction — this costs **0.01 SOL** (registration fee) plus a small amount for Solana account rent
 
-Your profile tracks your loan history and assigns sequential loan IDs.
+The current profile version (**v3**) also stores a **service wallet** — an in-browser key derived from your wallet signature. The protocol never spends from it on-chain; it's used only for off-chain authentication (AI generator, IPFS upload, ALT management). If you registered earlier with v1 or v2, the app will prompt you to migrate to v3 the next time you connect.
 
-## Step 2: Configure Your Loan
+The profile tracks your loan history, launch preset list, LP activity bitmap, and assigns sequential loan / preset IDs.
 
-Choose your loan parameters:
+## Step 2: Create a Launch Preset
+
+Launches run from a **Launch Preset** — a reusable on-chain account that holds your token's metadata, mint, supply, decimals, and bundle wallet configuration. See the dedicated [Launch Presets](/guides/launch-presets/) guide for details.
+
+In short, on `/presets/new` you fill in:
+
+- **Launch Configuration** — which platform/quote asset combination to use (mainnet today: pump.fun + WSOL)
+- **Base Mint** — generate a fresh keypair, import an existing one, or paste a vanity address; private keys are encrypted and stored locally in the browser
+- **Base Name / Symbol / URI** — token name, ticker, and metadata URI; the **Construct** button opens a modal that builds the JSON and uploads it (with image) to IPFS
+- **Base Supply / Decimals** — total supply (raw units) and decimals up to 9
+- **Bundle Addresses Count** + **Bundle Distribution Type** — how many bundle wallets to use and how to split the buy across them
+- **Bundle ALT** — Address Lookup Table that holds the bundle wallet addresses; the app can create or amend it for you
+
+Save the preset, then optionally **fund** the bundle wallets from the preset page. See [Bundle Wallets](/guides/bundle-wallets/) for the full bundle workflow.
+
+:::tip[AI generator]
+On the Construct Metadata modal, click **Generate Using AI** to have the app produce a name, symbol, description, and image automatically. The result is uploaded to IPFS and the URI is filled in for you.
+:::
+
+You only need to do this once per token concept. The same preset can be reused for as many launches as you want, as long as no loan is currently open against it.
+
+## Step 3: Configure the Loan
+
+From the preset page, click **Launch** to open the loan configuration. You can also launch without a preset from `/launch/:address` — in that case you fill the token fields inline. Either way you set:
 
 ### Loan Amount
 
-Select how much SOL you want to borrow. This determines how much SOL goes into buying your token on the pump.fun bonding curve.
+How much SOL the protocol borrows from the LP pool. This is the budget that funds the **initial buy** and the **bundle buys** combined.
 
 | | Min | Max |
 |---|---|---|
 | **Loan Amount** | 0.1 SOL | 10 SOL |
 
-A larger loan means a bigger initial buy on pump.fun, which pushes the token price higher on the bonding curve from the start.
+A larger loan means a larger total fill on the bonding curve.
+
+### Initial Buy Amount (preset launches)
+
+When launching from a preset, the loan amount is split between the **initial buy** (the very first buy on the curve, made by the protocol's execution wallet) and the **bundle buys** (additional buys distributed across bundle wallets). You can move the slider to choose how much goes to the initial buy versus the bundle.
+
+If you don't use a preset, the entire loan amount goes to the initial buy and bundle wallets are not used.
 
 ### Loan Duration
 
-Choose how long you need the loan:
+How long you need the loan:
 
 | | Min | Max |
 |---|---|---|
 | **Duration** | 1 hour | 24 hours |
 
-You must repay within this window, or your loan becomes eligible for liquidation.
+You can repay any time before expiration. After expiration the loan becomes eligible for admin liquidation; self-liquidation is allowed at any time, before or after expiry.
 
-### Token Details
+### User Buy (optional)
 
-Provide the metadata for your new token:
+A separate amount in SOL that **you** spend from your wallet to buy the token in the same atomic transaction as the launch. The protocol guarantees that no third party can buy between the protocol's last buy and your buy on the bonding curve — this is a built-in anti-frontrun checkpoint specific to Moono.
 
-- **Name** — the full token name (e.g., "Moono Cat")
-- **Symbol** — the token ticker (e.g., "MCAT")
-- **URI** — link to the token metadata JSON (image, description, etc.)
+If User Buy is greater than 0, the app strongly recommends enabling **Jito** in **Profile → Settings**. Jito bundles increase the chance that the launch and your buy land atomically.
 
-## Step 3: Review Costs
+### Token Fields (inline launches only)
 
-Before confirming, review the total cost breakdown:
+If you launch without a preset:
 
-1. **Protocol Fee** — 0.01 SOL (fixed)
-2. **Migration Reserve** — proportional to loan size (see [Economics](/getting-started/economics/#migration-reserve))
-3. **Launch Overhead** — 0.05 SOL (refundable)
-4. **Interest** — depends on loan amount, duration, and current liquidity utilization
+- **Base Mint** — generate, import, or paste an address (same UX as on the preset page)
+- **Base Name / Symbol / URI** — fill manually or use the **Construct** modal (with optional AI generator)
 
-You pay the interest + fees upfront from your wallet. The borrowed SOL goes entirely into the pump.fun token purchase.
+### Runtime ALT
+
+The launch transaction is large and uses a per-loan **Address Lookup Table** to fit within Solana's transaction limits. Click **Generate** in the form to have the app create the ALT before submitting; on success the field shows the ALT address.
+
+## Step 4: Review Costs
+
+Before confirming, review the total cost breakdown. All numbers come from the live mainnet [Economics](/getting-started/economics/) page.
+
+1. **Protocol Fee** — fixed (0.01 SOL today)
+2. **Migration Reserve** — proportional to loan size
+3. **Launch Overhead** — refundable on close (0.05 SOL today)
+4. **Interest** — depends on loan amount, duration, and which ticks fund the loan
+5. **Bundle Wallet Funding** (optional, separate transaction) — SOL you transfer to bundle wallets so they can pay rent for ATAs and fees
+
+You pay the interest and fees upfront from your wallet. The borrowed SOL is what funds the on-curve buys.
 
 :::note
-Launch configurations that use WSOL as the quote currency (such as pump.fun) require WSOL for fees and interest. If you don't have enough WSOL, the app will automatically convert the required amount from your native SOL balance. For frequent launches, consider pre-wrapping SOL to save on overhead — see [Working with WSOL](/guides/wsol/) for details.
+The pump.fun launch configuration uses WSOL for fees and interest. If you don't have enough WSOL, the app automatically converts the required amount from your native SOL balance. For frequent launches, consider pre-wrapping SOL — see [Working with WSOL](/guides/wsol/).
 :::
 
 :::tip
-Check the [Economics](/getting-started/economics/#complete-cost-examples) page for detailed cost examples at different loan sizes and durations.
+Use the **Check** button to dry-run validation (balances, ALT, bundle wallet funding, derived accounts) before clicking **Launch**.
 :::
 
-## Step 4: Launch
+## Step 5: Launch
 
-Confirm the transaction. In a single atomic transaction, Moono Protocol will:
+Click **Launch**. In a single atomic transaction (or Jito bundle, if enabled), Moono Protocol:
 
-1. Deduct fees and interest from your wallet
-2. Borrow SOL from the liquidity pool (starting from the lowest-cost ticks)
-3. Create your token on pump.fun
-4. Execute the initial buy on the pump.fun bonding curve
-5. Store the purchased tokens as collateral in a program-controlled escrow
+1. Deducts fees and interest from your wallet
+2. Borrows SOL from the LP pool, starting from the lowest-cost ticks
+3. Creates your token on pump.fun
+4. Executes the **initial buy** on the bonding curve
+5. Distributes the remaining loan amount across **bundle wallets** and executes their buys
+6. Optionally executes your **user buy** with the curve checkpoint guarantee
+7. Stores the initial-buy and bundle-buy tokens as collateral in program-controlled escrows
 
-After the transaction confirms, your token is live on pump.fun and tradeable by anyone.
+After confirmation, the **Launch Result** panel shows the loan address, the Jito bundle ID (if used), and per-step transaction signatures. Click **Go to Loan** to open the loan page.
 
-## Step 5: Manage Your Loan
+## Step 6: Manage Your Loan
 
-Once your token is launched, you have two options:
+Once your token is launched, you have two main paths:
 
-### Option A: Repay the Loan
+### Option A: Repay
 
-Before the loan expires, you can repay to recover your collateral tokens:
+Before the loan expires, repay to recover the collateral tokens:
 
-1. Ensure your wallet has enough SOL to cover the repayment amount
-2. Click **Repay** on your active loan
+1. Ensure your wallet has enough SOL/WSOL to cover the repayment amount
+2. Open the loan page and click **Repay**
 3. Approve the transaction
 
 On repayment:
-- The borrowed SOL is returned to the liquidity pool
-- Your collateral tokens (the tokens bought on pump.fun) are transferred to your wallet
-- The refundable launch overhead (0.05 SOL) is returned to you
+
+- The borrowed SOL is returned to the LP pool
+- The collateral tokens (initial buy) are transferred to your wallet
+- The refundable launch overhead is returned
 - The loan is marked as **Repaid**
+- Bundle wallet holdings are **not** automatically unwound on repay — they stay in the bundle wallets and you can sell/collect them separately from the preset page
 
-### Option B: Let It Be Liquidated
+### Option B: Liquidate / Sell & Liquidate
 
-If you don't repay before the deadline, the loan becomes eligible for liquidation:
+If you want to settle in SOL directly, or if the loan expired without repayment:
 
-- You can trigger the liquidation yourself, or the protocol admin will do it
-- The collateral tokens are sold on the pump.fun bonding curve
-- Proceeds go to repay the liquidity pool
-- You lose the collateral tokens, but you don't owe anything extra
+- **Liquidate** — sells the initial-buy collateral on the bonding curve, repays the LP pool, and returns the excess SOL to you
+- **Sell & Liquidate** — first sells all bundle wallet base holdings via the bundle sell instruction, then liquidates the loan in the same flow; this is the one-click way to fully unwind a launch
 
-:::caution
-Once a loan expires, liquidation can happen at any moment. There is no grace period. If you want to keep your tokens, repay before the deadline.
-:::
+Self-liquidation is allowed at any time. After expiration the protocol admin may also liquidate your loan; there is no grace period.
+
+If a loan was launched from a preset, repaying or liquidating it also unlocks the preset for reuse.
 
 ## Loan Statuses
 
 | Status | Meaning |
 |---|---|
-| **Open** | Loan is active; you can repay before expiration |
-| **Repaid** | You repaid the loan and recovered your tokens |
-| **Liquidated by User** | A user (could be anyone) triggered liquidation after expiry |
-| **Liquidated by Admin** | Protocol admin triggered liquidation |
+| **Open** | Loan is active; you can repay any time before expiration |
+| **Repaid** | You repaid the loan and recovered your initial-buy collateral |
+| **Liquidated by User** | You (the borrower) triggered liquidation |
+| **Liquidated by Admin** | Protocol admin triggered liquidation (typically post-expiration) |
+
+The loan page also surfaces low-level fields: **quote_reserved**, **quote_borrowed**, **initial_quote_buy_amount**, **quote_amount_liquidated**, **bundled_base_amount**, **remain_base_pool_amount**, and the per-tick borrow breakdown.
 
 ## Tips
 
 - **Start small** — try a 0.1 SOL loan first to understand the flow
-- **Watch the clock** — set a reminder before your loan expires if you plan to repay
-- **Check liquidity** — if lower ticks are depleted, your loan will use higher ticks (more expensive)
-- **Factor in all costs** — the interest is just one part; don't forget the protocol fee and migration reserve
+- **Use a preset for repeat launches** — it saves the metadata round-trip and lets you reuse a vanity mint
+- **Pre-fund bundle wallets** — funding before launch is a separate transaction; without it the launch can't pay for the bundle ATAs
+- **Enable Jito for User Buy** — without Jito your user buy may land in a separate slot and lose the curve checkpoint protection
+- **Watch the clock** — set a reminder before expiration if you plan to repay
+- **Factor in all costs** — interest is one of several components; check the Economics page for the full breakdown

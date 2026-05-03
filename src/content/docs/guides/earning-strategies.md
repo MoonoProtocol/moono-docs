@@ -33,7 +33,7 @@ When you take a loan and launch a token, Moono Protocol creates the token on pum
 
 ## Scenario 2: Self-Liquidation
 
-As a borrower, you can call **liquidate** on your own loan. The protocol will sell the collateral tokens on the bonding curve, repay the liquidity pool, and **return any excess SOL to you**.
+As a borrower, you can call **liquidate** on your own loan **at any time** (no expiry check). The protocol will sell the initial-buy collateral on the bonding curve, repay the liquidity pool, and **return any excess SOL to you**.
 
 1. **Launch** — borrow SOL and launch your token
 2. **Build** — grow the token community, attract holders
@@ -50,13 +50,29 @@ As a borrower, you can call **liquidate** on your own loan. The protocol will se
 - The remaining ~1.5 SOL is refunded to your wallet
 - Net result: you spent 0.11 SOL in fees and received ~1.5 SOL back — profit of **~1.39 SOL**
 
-### Repay vs Self-Liquidation
+## Scenario 3: Sell & Liquidate (Bundle Wallets)
 
-| | Repay | Self-Liquidation |
-|---|---|---|
-| You receive | Collateral tokens (to sell yourself) | Excess SOL directly |
-| Requires | SOL to repay the loan | Nothing extra — the collateral covers it |
-| Best when | You want to keep some tokens or sell on a specific DEX | You want a simple exit in SOL |
+If you launched the loan from a [Launch Preset](/guides/launch-presets/) with [bundle wallets](/guides/bundle-wallets/), the bundle wallets each hold a slice of the token they bought during the launch. Liquidate on its own only sells the **initial buy** collateral — bundle holdings stay in the bundle wallets and need to be unwound separately.
+
+The loan page exposes a one-click **Sell & Liquidate** action that:
+
+1. Sells all base-token balances held by the bundle wallets via the bundle sell instruction
+2. Routes the SOL proceeds back to the protocol
+3. Liquidates the loan in the same flow, applying both the initial-buy and bundle-buy proceeds against the borrowed amount
+4. Refunds any excess SOL to your wallet
+
+You can also do these steps individually — **Sell Selected** and **Collect SOL** on the preset page operate on a chosen subset of bundle wallets, and **Liquidate** on the loan page closes the position once collateral is unwound.
+
+**When it's useful:** any time you want a clean SOL exit on a launch that used bundle wallets. Without this flow you'd have to manually sell each bundle wallet's holdings and then collect remaining SOL.
+
+### Repay vs Self-Liquidation vs Sell & Liquidate
+
+| | Repay | Self-Liquidation | Sell & Liquidate |
+|---|---|---|---|
+| You receive | Initial-buy collateral tokens | Excess SOL after initial-buy sell | Excess SOL after initial-buy + bundle sell |
+| Requires | SOL to repay the loan | Nothing extra — collateral covers it | Nothing extra — collateral + bundle holdings cover it |
+| Best when | You want to keep some tokens or sell on a specific DEX | Simple SOL exit, no bundle wallets used | One-click full unwind for a bundle launch |
+| Bundle holdings | Stay in bundle wallets — sell/collect separately | Stay in bundle wallets — sell/collect separately | Sold automatically as part of the action |
 
 ## What Drives Profitability
 

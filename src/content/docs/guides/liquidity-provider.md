@@ -81,19 +81,30 @@ Once deposited, your SOL may be:
 You can track:
 - Your share count and current share value
 - How much of your tick's liquidity is currently borrowed
-- Interest earned (reflected in the increasing share price)
+- Accrued interest claimable independently of withdrawal
 
 ### How Interest Accrues
 
-You don't receive interest payments directly. Instead, when loans are repaid, the interest is added to the tick's balance. This increases the value of each share:
+Interest is paid by the borrower **upfront** when a loan is created, and accrues to your tick at that exact moment via a cumulative-index model. There are two ways your earnings are visible:
 
-```
-share_value = (tick_balance + tick_borrowed) / tick_total_shares
-```
+1. **Per-share index** — each tick has a global cumulative interest index. When a loan is taken, the index advances by `interest_amount / current_shares`, locking in your share of that loan's interest immediately. Your position snapshots the index on every state-mutating action (open / deposit / withdraw / claim) and the difference is moved into your `unclaimed_interest`.
+2. **Share value** — interest sitting in your position can also be claimed at withdrawal or close, at which point the protocol pays it from the tick's interest pool.
 
-Over time, as more loans are repaid with interest, your shares become worth more SOL.
+Practically, you don't have to think about this — the app shows your **claimable interest** directly. The key takeaway is that you earn at the moment of borrow, not at repayment, and you don't need to keep the position open until the loan closes to keep your share of that loan's interest.
 
-## Step 5: Add More Liquidity
+## Step 5: Claim Accrued Interest
+
+You can claim accrued interest at any time without touching your principal:
+
+1. Open the position on the pool page
+2. Click **Claim Fees**
+3. Approve the transaction
+
+Your position keeps the same share count; only the `unclaimed_interest` is transferred to your wallet. This is useful if you want to compound earnings into a different tick, or simply realize gains while your principal stays at work.
+
+Accrued interest is also automatically paid out on **Withdraw** and **Close Position**.
+
+## Step 6: Add More Liquidity
 
 You can deposit additional SOL into your existing position at any time:
 
@@ -103,7 +114,7 @@ You can deposit additional SOL into your existing position at any time:
 
 New shares are minted at the current share price, so your total share count increases.
 
-## Step 6: Withdraw
+## Step 7: Withdraw
 
 When you want to withdraw some or all of your liquidity:
 
@@ -131,7 +142,7 @@ If a large portion of your tick's liquidity is currently borrowed, you may not b
 This is not a lock-up — it's a natural constraint of the lending model. Your SOL is earning interest while it's borrowed. Once the loan is repaid or liquidated, the liquidity becomes available for withdrawal.
 :::
 
-## Step 7: Close Position
+## Step 8: Close Position
 
 When you've withdrawn all your shares and want to clean up:
 
@@ -156,6 +167,10 @@ If you deposit in a very high tick that is never utilized, your SOL earns nothin
 ### Smart Contract Risk
 
 As with any DeFi protocol, there are inherent smart contract risks. While the protocol is designed with safety in mind, no smart contract is guaranteed to be bug-free.
+
+### Pause Risk
+
+Each quote vault has a per-vault `paused` flag, and there is also a protocol-wide pause. While paused, deposits, withdraws, claims, and new launches against that vault are blocked until the admin unpauses. Existing positions and accrued interest remain intact across a pause.
 
 ## Tips
 
