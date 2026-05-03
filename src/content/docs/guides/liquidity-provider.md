@@ -26,7 +26,7 @@ If you haven't already, create a User Profile (same for borrowers and LPs):
 
 - Connect your wallet to the Moono app
 - Click **Register**
-- Approve the transaction (0.01 SOL registration fee + rent)
+- Approve the transaction (registration fee + rent — exact amount in [Economics](/getting-started/economics/))
 
 ## Step 2: Choose Your Tick
 

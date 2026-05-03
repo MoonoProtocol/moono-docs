@@ -3,7 +3,21 @@ title: Borrower Guide
 description: Step-by-step guide for borrowing SOL and launching tokens on pump.fun through Moono Protocol.
 ---
 
+import config from '../../../data/protocol-config.json';
+
+export const minSol = config.launchConfiguration.quoteAmountMinSol;
+export const maxSol = config.launchConfiguration.quoteAmountMaxSol;
+export const minHours = config.launchConfiguration.loanIntervalMin;
+export const maxHours = config.launchConfiguration.loanIntervalMax;
+export const regFeeSol = config.config.registrationFeeSol;
+export const protocolFeeSol = config.launchConfiguration.quoteLaunchFixedCostSol;
+export const launchOverheadSol = config.launchConfiguration.quoteLaunchFixedOverheadRefundableSol;
+
 This guide walks you through the full process of borrowing SOL from Moono Protocol to launch a token on pump.fun.
+
+:::note[Live values]
+All numbers on this page (loan limits, fees, durations) are pulled from the current **mainnet** on-chain configuration at build time. See [Economics](/getting-started/economics/) for the full breakdown and live recalculation examples.
+:::
 
 ## Prerequisites
 
@@ -18,7 +32,7 @@ Before your first loan, you need to create a **User Profile** on the protocol. T
 
 - Connect your wallet to the Moono app
 - Click **Register** (or the profile creation action)
-- Approve the transaction — this costs **0.01 SOL** (registration fee) plus a small amount for Solana account rent
+- Approve the transaction — this costs **{regFeeSol} SOL** (registration fee) plus a small amount for Solana account rent
 
 The current profile version (**v3**) also stores a **service wallet** — an in-browser key derived from your wallet signature. The protocol never spends from it on-chain; it's used only for off-chain authentication (AI generator, IPFS upload, ALT management). If you registered earlier with v1 or v2, the app will prompt you to migrate to v3 the next time you connect.
 
@@ -55,7 +69,7 @@ How much SOL the protocol borrows from the LP pool. This is the budget that fund
 
 | | Min | Max |
 |---|---|---|
-| **Loan Amount** | 0.1 SOL | 10 SOL |
+| **Loan Amount** | {minSol} SOL | {maxSol} SOL |
 
 A larger loan means a larger total fill on the bonding curve.
 
@@ -71,7 +85,7 @@ How long you need the loan:
 
 | | Min | Max |
 |---|---|---|
-| **Duration** | 1 hour | 24 hours |
+| **Duration** | {minHours} hour{minHours === 1 ? '' : 's'} | {maxHours} hours |
 
 You can repay any time before expiration. After expiration the loan becomes eligible for admin liquidation; self-liquidation is allowed at any time, before or after expiry.
 
@@ -96,9 +110,9 @@ The launch transaction is large and uses a per-loan **Address Lookup Table** to 
 
 Before confirming, review the total cost breakdown. All numbers come from the live mainnet [Economics](/getting-started/economics/) page.
 
-1. **Protocol Fee** — fixed (0.01 SOL today)
+1. **Protocol Fee** — fixed ({protocolFeeSol} SOL today)
 2. **Migration Reserve** — proportional to loan size
-3. **Launch Overhead** — refundable on close (0.05 SOL today)
+3. **Launch Overhead** — refundable on close ({launchOverheadSol} SOL today)
 4. **Interest** — depends on loan amount, duration, and which ticks fund the loan
 5. **Bundle Wallet Funding** (optional, separate transaction) — SOL you transfer to bundle wallets so they can pay rent for ATAs and fees
 
@@ -170,7 +184,7 @@ The loan page also surfaces low-level fields: **quote_reserved**, **quote_borrow
 
 ## Tips
 
-- **Start small** — try a 0.1 SOL loan first to understand the flow
+- **Start small** — try a {minSol} SOL loan first to understand the flow
 - **Use a preset for repeat launches** — it saves the metadata round-trip and lets you reuse a vanity mint
 - **Pre-fund bundle wallets** — funding before launch is a separate transaction; without it the launch can't pay for the bundle ATAs
 - **Enable Jito for User Buy** — without Jito your user buy may land in a separate slot and lose the curve checkpoint protection

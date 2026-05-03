@@ -26,7 +26,7 @@ Moono Protocol lets you **borrow SOL** to launch and seed your token on pump.fun
 
 1. Create a reusable [**Launch Preset**](/guides/launch-presets/) with your token metadata, supply, and decimals — or generate everything with the built-in AI generator
 2. Optionally configure [**bundle wallets**](/guides/bundle-wallets/) — protocol-controlled PDAs that distribute the initial buy across multiple wallets in the same transaction
-3. Choose how much SOL to borrow (0.1–10 SOL) and for how long (1–24 hours)
+3. Choose how much SOL to borrow and for how long (current limits and exact fees: see [Economics](/getting-started/economics/))
 4. Moono creates your token on pump.fun, executes the initial buy, runs the bundle buys, and optionally lets you co-buy in the same atomic transaction
 5. The purchased tokens (initial buy + bundle holdings) serve as collateral for your loan
 6. Repay the loan to recover your tokens, or self-liquidate to settle in SOL

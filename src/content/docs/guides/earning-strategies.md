@@ -108,7 +108,7 @@ These scenarios describe potential outcomes, not guaranteed results. The majorit
 - **Full loss of fees and interest** — if the token price drops, you lose the upfront costs paid for the loan
 - **Collateral devaluation** — if the token price falls below the loan amount, self-liquidation returns less than what was borrowed; fees are still lost
 - **Market impact** — selling large amounts of tokens can significantly move the price down, especially on bonding curves with low liquidity
-- **Time pressure** — loans have a fixed duration (1–24 hours); if you don't act before expiration, the protocol admin may liquidate your loan
+- **Time pressure** — loans have a fixed duration (current min/max in [Economics](/getting-started/economics/)); if you don't act before expiration, the protocol admin may liquidate your loan
 
 Any activity involving token launches and trading carries significant financial risk. Other market participants may incur losses as a result of token price movements. This documentation describes protocol mechanics only and does not constitute an endorsement or recommendation of any particular strategy.
 :::
